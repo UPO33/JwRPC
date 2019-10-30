@@ -1,7 +1,7 @@
 # JwRPC
 lightweight bidirectional rpc using Websocket and JSON
 
-# WIP
+# WIP don't use it yet
 
 # Features
 - Easy To use

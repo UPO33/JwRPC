@@ -1,6 +1,6 @@
 {
-  "name": "@upo33/jwrpc",
-  "version": "0.0.1",
+  "name": "JwRPC",
+  "version": "0.0.3",
   "description": "bidirectional rpc using Websocket and JSON",
   "main": "index.js",
   "scripts": {
@@ -10,16 +10,25 @@
     "type": "git",
     "url": "git+https://github.com/UPO33/JwRPC.git"
   },
+  "files": [
+    "index.js"
+  ],
   "keywords": [
     "rpc",
-	"jsonrpc",
+    "jsonrpc",
     "bidi",
-	"websocket"
+    "websocket"
   ],
   "author": "upo33",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/UPO33/JwRPC/issues"
   },
-  "homepage": "https://github.com/UPO33/JwRPC"
+  "homepage": "https://github.com/UPO33/JwRPC",
+  "dependencies": {},
+  "devDependencies": {
+    "prompts": "^2.2.1",
+    "ws": "^7.2.0",
+    "yargs": "^14.2.0"
+  }
 }
