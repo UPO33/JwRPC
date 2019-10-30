@@ -24,7 +24,19 @@ class MethodState{
     }
 }
 
+
+
+
+/*
+hold the basic infomation about a Request or Method.
+*/
 class MethodInfo{
+    /** 
+    @param {function(JwRPC, any, function)} callback    - function to be called.
+    @param {boolean} bSolo        - if true, only one instance would be in process. this could be useful if you have some concurancy problems.
+    @param {number} limitRate     - how many times it could be called in 'limitPeriod' seconds. if exceeds peer receives {Errors.PerRPCRateLimitReached}
+    @param {number} limitPeriod   - how long is the period. in seconds
+    */
     constructor(callback, bSolo = false, limitRate = 100, limitPeriod=1){
         this.callback = callback;
         this.bSolo = bSolo;
@@ -34,14 +46,16 @@ class MethodInfo{
 }
 
 
-
+/*
+main connection class.
+*/
 class JwRPC {
     /**
      * 
-     * @param {WebSocket} ws the websocket connection
-     * @param {Object} rpcMap 
+     * @param {WebSocket} ws                           - the websocket connection
+     * @param {Object.<string, MethodInfo>} methods    - all the methods to be registered.
      */
-    constructor(ws, rpcMap){
+    constructor(ws, methods){
         this.ws = ws;
         this.idCounter = 0;
         //requests waiting for respond
@@ -53,8 +67,8 @@ class JwRPC {
 
         //make the new rpc states
         this.rpcStates = {};
-        for(let rpcName in rpcMap){
-            const rpcItem = rpcMap[rpcName];
+        for(let rpcName in methods){
+            const rpcItem = methods[rpcName];
             assert(rpcItem);
             this.rpcStates[rpcName] = new MethodState(rpcItem.callback, rpcItem);
         }
@@ -204,17 +218,20 @@ class JwRPC {
         }
 
     }
-    /*
+    /** 
     send a notification to the peer. notification is one way there is no respond and callback for it.
-    */
+    @param {string} method 
+    @param {any} params
+    **/
     Notify(method, params){
         //#TODO do we need try catch here?
         this.ws.send(JSON.stringify({method, params}));
     }
-    /*
+    /** 
     send a request to the peer, the return value is a promise. any error is caught by 'catch'
-    
-    */
+    @param {string}  method
+    @param {any} params
+    **/
     Request(method, params){
         return new Promise((resolve, reject) => {
         
