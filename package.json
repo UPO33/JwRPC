@@ -1,5 +1,5 @@
 {
-  "name": "JwRPC",
+  "name": "jwrpc",
   "version": "0.0.3",
   "description": "bidirectional rpc using Websocket and JSON",
   "main": "index.js",
